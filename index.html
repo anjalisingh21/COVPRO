@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CovPro</title>
+    <script src="graph.js"></script>
+</head>
+<style>
+    @import url("https://images.unsplash.com/photo-1588613254584-82121ec82410?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1308&q=80");
+
+* {  
+  scroll-behavior: smooth;
+  align-items:center;
+  text-align: center;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  min-height: 100vh;
+  display: inline;
+  align-items: center;
+    justify-content: center;
+    background-color: #dae7fa;
+    margin: 40px;
+    background-image: url("https://images.unsplash.com/photo-1588613254584-82121ec82410?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1308&q=80");
+  background-size: cover;
+}
+
+.title {
+  margin: 10px;
+  font-weight: 600;
+  font-size: 3rem;
+  color: #ffecec;
+ 
+ 
+}
+
+.title h2, h3{
+  color: #B5651D ;
+  font-size: 0.8rem;;
+}
+
+.footer {
+  margin-top: 2%;
+  text-align: center;
+  padding-bottom: 20px;
+  font-family: monospace;
+}
+
+
+
+
+canvas {
+    border: thin solid #3b0707e8;
+    box-shadow: 7px 7px 15px rgba(55, 84, 170, 0.15),
+    -7px -7px 20px rgb(252, 233, 233),
+    inset 0px 0px 4px rgba(255, 255, 255, 0.2),
+    inset 7px 7px 15px rgba(55, 84, 170, 0),
+    inset -7px -7px 20px rgba(255, 255, 255, 0),
+    0px 0px 4px rgba(255, 255, 255, 0);
+}
+
+.person {
+    margin: 30px auto;
+}
+.graph{
+    width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: Monserrat;
+    color: #ffecec;
+    box-shadow: 7px 7px 15px rgba(55, 84, 170, 0.15),
+    -7px -7px 20px rgb(252, 233, 233),
+    inset 0px 0px 4px rgba(255, 255, 255, 0.2),
+    inset 7px 7px 15px rgba(55, 84, 170, 0),
+    inset -7px -7px 20px rgba(255, 255, 255, 0),
+    0px 0px 4px rgba(255, 255, 255, 0);
+    
+}
+.graph h1{
+  text-align: center;
+    font-family: Monserrat;
+    color: #ffecec;
+}
+.precautions{
+padding-bottom: 2rem;
+margin-bottom: 20px;
+color: rgb(20, 18, 18);
+font-family: sans-serif;
+font-size: 3 rem; 
+background-color: #becf90  ;
+width: 100%;
+
+
+}
+
+
+</style>
+<body onload="init()">
+
+    <div class="header">
+        <div id="title" class="title">COVPRO</div>
+        <h3>Brings to you the live updates regarding covid-19 globally and more...<br>
+      Our motto is "STOP THE SPREAD".</h3>
+        
+        <div class="flourish-embed flourish-map" data-src="story/555214"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+        <div class="flourish-embed flourish-chart" data-src="story/230110"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+        <div class="flourish-embed flourish-map" data-src="story/225979"><script src="https://public.flourish.studio/resources/embed.js"></script></div>
+      </div>
+      <img src="https://images.unsplash.com/photo-1588852732799-de793c9c63a4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400&q=80" width="60%" height="100%" />
+      <div class="graphs">
+      <h1>How does Covid-19 spread?<br/>(simulation graph)</h1>
+    
+    <p>
+    If people move, how do they get infected? Set the number of people and you will get your answer.
+    </p>
+    <div class="person">
+        Person Count：<span id="value">1</span>
+        <input type="range" id="num" value="1" min="1" max="100" value="100">
+        <input type="button" value="start" onclick="startSimulation()">
+    </div>
+    <canvas id="graph" width="600" height="100"></canvas><br>
+    <canvas id="city" width="600" height="600"></canvas>
+      </div>  
+    
+      <div class="precautions">
+        <h2> <b> Do's </b> </h2>
+       
+         <p>
+          <br> Clean your hands often. Use soap and water, or an alcohol-based hand rub. </br>
+          <br> Maintain a safe distance from anyone who is coughing or sneezing. </br>
+          <br> Wear a mask when physical distancing is not possible. </br>
+          <br> Avoid Using Public Transport </br>
+          <br> If you have a fever, cough and difficulty breathing, seek medical attention. </br>
+        </p>
+        
+  <h2> <b> Don't's </b> </h2>
+  <p>
+      <br> Do Not Use Over The Counter Medicines (Self medication ) </br>
+      <br>  Do Not Spit </br>
+      <br> Do not touch your face. </br>
+      <br> Do not walk in to a clinic if you think you have COVID-19, or if you have symptoms of COVID-19. </br>
+      
+</p>
+    
+  </div>
+  
+      <div class="footer">
+        <b>Disclaimer</b>: This is <b>not</b> an <b>official</b> site. <br>
+        Made by <b>Team 4</b>
+      </div>     
+
+    <script>
+      
+
+var elem = document.getElementById('num');
+    var human = document.getElementById('value');
+    var rangeValue = function (elem, human) {
+    return function(evt){
+        human.innerHTML = elem.value;
+    }
+    }
+    elem.addEventListener('input', rangeValue(elem, human));
+
+    </script>  
+    
+</body>
+</html>
